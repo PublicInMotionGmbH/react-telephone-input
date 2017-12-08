@@ -207,7 +207,14 @@ describe('react telephone input', function() {
         )
         expect(wrapper.state('formattedNumber')).to.equal('+1 (231) 312-3132')
         wrapper.setProps({ value: null })
-        expect(wrapper.state('formattedNumber')).to.equal('+')
+        expect(wrapper.state('formattedNumber')).to.equal('')
+    })
+
+    it('should insert selected country prefix once an empty field is focused', () => {
+        const wrapper = mount(<ReactTelephoneInput defaultCountry="in" value="" />)
+        expect(wrapper.state('formattedNumber')).to.equal('')
+        wrapper.find('input').simulate('focus')
+        expect(wrapper.state('formattedNumber')).to.equal('+91')
     })
 
     describe('country code replacement', () => {

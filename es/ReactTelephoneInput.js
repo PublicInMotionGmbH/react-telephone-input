@@ -50,7 +50,7 @@ var keys = {
 
 export function formatNumber(text, pattern, autoFormat) {
     if (!text || text.length === 0) {
-        return '+';
+        return '';
     }
 
     // for all strings with length less than 3, just return it (1, 2 etc.)
@@ -161,7 +161,6 @@ export var ReactTelephoneInput = createReactClass({
     componentDidMount: function componentDidMount() {
         document.addEventListener('keydown', this.handleKeydown);
 
-        this._cursorToEnd(true);
         if (typeof this.props.onChange === 'function') {
             this.props.onChange(this.state.formattedNumber, this.state.selectedCountry);
         }
@@ -219,16 +218,14 @@ export var ReactTelephoneInput = createReactClass({
 
     // put the cursor to the end of the input (usually after a focus event)
     _cursorToEnd: function _cursorToEnd(skipFocus) {
+        debugger;
         var input = this.refs.numberInput;
-        if (skipFocus) {
-            this._fillDialCode();
-        } else {
+        if (!skipFocus) {
             input.focus();
-
-            if (isModernBrowser) {
-                var len = input.value.length;
-                input.setSelectionRange(len, len);
-            }
+        }
+        if (isModernBrowser) {
+            var len = input.value.length;
+            input.setSelectionRange(len, len);
         }
     },
 
@@ -419,7 +416,7 @@ export var ReactTelephoneInput = createReactClass({
     },
     _fillDialCode: function _fillDialCode() {
         // if the input is blank, insert dial code of the selected country
-        if (this.refs.numberInput.value === '+') {
+        if (this.refs.numberInput.value === '') {
             this.setState({
                 formattedNumber: '+' + this.state.selectedCountry.dialCode
             });
