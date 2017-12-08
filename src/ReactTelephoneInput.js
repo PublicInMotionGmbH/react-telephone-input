@@ -242,7 +242,6 @@ export var ReactTelephoneInput = createReactClass({
 
     // put the cursor to the end of the input (usually after a focus event)
     _cursorToEnd(skipFocus) {
-        debugger;
         var input = this.refs.numberInput
         if (!skipFocus) {
             input.focus()
